@@ -1,12 +1,12 @@
 import { useRef, useEffect, useState } from "react";
 import PropTypes from 'prop-types';
 import {setNewOffset} from '../utils.js'
-import {setZIndex} from '../utils.js'
+import {setZIndex, bodyParser } from '../utils.js'
 import Trash from "../icons/Trash";
 
 
 const NoteCard = ({ note }) => {
-    const body = JSON.parse(note.body);
+    const body = bodyParser(note.body);
     const [position, setPosition] = useState(JSON.parse(note.position));
     const colors = JSON.parse(note.colors);
 
