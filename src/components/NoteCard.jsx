@@ -3,11 +3,11 @@ import { db } from "../appwrite/databases";
 import PropTypes from 'prop-types';
 import {setNewOffset} from '../utils.js'
 import {setZIndex, bodyParser } from '../utils.js'
-import Trash from "../icons/Trash";
+import DeleteButton from "./DeleteButton";
 import Spinner from "../icons/Spinner"; 
 
 
-const NoteCard = ({ note }) => {
+const NoteCard = ({ note, setNotes }) => {
     const [saving, setSaving] = useState(false);
     const keyUpTimer = useRef(null);
 
@@ -33,10 +33,12 @@ const NoteCard = ({ note }) => {
 
     
     const mouseDown = (e) => {
+        if (e.target.className === "card-header"){
         setZIndex(cardRef.current);
         mouseStartPos = { x: e.clientX, y: e.clientY };
         document.addEventListener("mousemove", mouseMove);
         document.addEventListener("mouseup", mouseUp);
+        }
     };
     
     const mouseMove = (e) => {
@@ -103,9 +105,10 @@ const NoteCard = ({ note }) => {
                 onMouseDown={mouseDown}
                 className="card-header"
                 style={{ backgroundColor: colors.colorHeader }}
+                
     >
 
-        <Trash />
+        <DeleteButton setNotes={setNotes} noteId={note.$id} />
         {saving && (
         <div className="card-saving">
             <Spinner color={colors.colorText} />
@@ -133,6 +136,7 @@ const NoteCard = ({ note }) => {
 
 
 NoteCard.propTypes = {
+    setNotes: PropTypes.func.isRequired,
     note: PropTypes.shape({
         body: PropTypes.string.isRequired,
         position: PropTypes.string.isRequired,
