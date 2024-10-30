@@ -1,4 +1,4 @@
-# Sticky Notes React
+# StickIt 
 
 Drag & Drop sticky notes App built with React JS and Appwite.
 
